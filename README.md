@@ -31,16 +31,36 @@ $ echo 'pwd; sleep 1m' > /home/sarah/app3/app.sh
 
 > these could be git-repositories with an `app.sh` file as entry-point
 
-# run all them user apps!
+# run all them user apps during boot!
 
+/root/nohuppy_start.sh
 ```
-# su john  -c 'nohuppy start /home/john'
-# su sarah -c 'nohuppy start /home/sarah'
+for i in /home/*; do 
+  user=$(basename $i)
+  su $user -c 'nohuppy start /home/$user'
+done
 ```
 
-> TIP: run this at server boot using a systemd/runit script
+/lib/systemd/system/nohuppy.service 
+```
+[Unit]
+Description=nohuppy apps 
 
-# allow restart/stop for ssh-users:
+[Service]
+ExecStart=/root/nohuppy_start.sh
+
+[Install]
+WantedBy=multi-user.target
+```
+
+then enable it:
+```
+# systemctl daemon-reload 
+# systemctl enable shellscript.service 
+# systemctl start shellscript.service 
+```
+
+# enable control over ssh ('lingering'):
 
 ```
 $ ssh john@myserver
@@ -49,8 +69,8 @@ myserver $ nohuppy install
 + sudo loginctl enable-linger john
 [sudo] password for john: ******
 
-myserver $ nohuppy restart
-myserver $ exit           # app will now linger(*) after logout
+myserver $ nohuppy restart .     # restart all apps
+myserver $ exit                  # apps will now linger(*) after logout
 ```
 
 > \* = `nohup` apps won't be killed after logout
