@@ -1,4 +1,4 @@
-Basically `nohuppy` around the `docker-compose` of the unix `nohup` & `kill` utility.
+Basically `nohuppy` around the 6kb `docker-compose` of the unix `nohup` & `kill` utility.
 
 > powered by ~800k of classic, battlehardened unix dependencies (`find awk lsof readlink socat dirname find kill`)
 
@@ -56,8 +56,8 @@ WantedBy=multi-user.target
 then enable it:
 ```
 # systemctl daemon-reload 
-# systemctl enable shellscript.service 
-# systemctl start shellscript.service 
+# systemctl enable nohuppy.service 
+# systemctl start nohuppy.service 
 ```
 
 ## enable control over ssh ('lingering'):
