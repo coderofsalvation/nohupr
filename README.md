@@ -31,33 +31,22 @@ $ echo 'pwd; sleep 1m' > /home/sarah/app3/app.sh
 
 > these could be git-repositories with an `app.sh` file as entry-point
 
-## run all them user apps during boot
+## run all user apps during boot
 
-/root/nohuppy_start.sh
 ```
-for i in /home/*; do 
-  user=$(basename $i)
-  su $user -c 'nohuppy start /home/$user'
-done
-```
+$ nohuppy systemd
+ [✓] systemd
+  │  wrote /tmp/nohuppy.service
+  │  wrote /tmp/nohuppy.sh
+please verify the files above, and install them by running:
 
-/lib/systemd/system/nohuppy.service 
-```
-[Unit]
-Description=nohuppy apps 
+  sudo mv /tmp/nohuppy.service /lib/systemd/system/.
+  sudo mv /tmp/nohuppy.sh      /root/.
+  sudo systemctl daemon-reload 
+  sudo systemctl enable nohuppy.service 
+  sudo systemctl start nohuppy.service 
 
-[Service]
-ExecStart=/root/nohuppy_start.sh
-
-[Install]
-WantedBy=multi-user.target
-```
-
-then enable it:
-```
-# systemctl daemon-reload 
-# systemctl enable nohuppy.service 
-# systemctl start nohuppy.service 
+$
 ```
 
 ## enable control over ssh ('lingering'):
@@ -90,6 +79,10 @@ enter max parallel processes: 4
   │  created '.on.http'
   │  listening on 3889 [max 4 processes]
   │  ./.on.http is triggered by: curl http://127.0.0.1:3889 --http0.9 
+
+
+$ curl http://127.0.0.1:3889 --http0.9           # another terminal
+.on.http: received GET / HTTP/1.1 from 127.0.0.1
 ```
 
 > now everytime `nohuppy start` is invoked, the `.on.http` will listen on your port

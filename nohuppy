@@ -113,6 +113,34 @@ http(){ # http                 : receive trigger from http
   socat -t2 TCP4-LISTEN:$PORT,fork,max-children=$PARALLEL,forever,reuseaddr exec:"./.on.http",pipes,pty,echo=0;
 }
 
+systemd(){
+  test -f /lib/systemd/system/nohuppy.service && { print "nohuppy systemd installed"; exit 0; }
+  echo '[Unit]
+  Description=nohuppy apps 
+
+  [Service]
+  ExecStart=/root/nohuppy.sh
+
+  [Install]
+  WantedBy=multi-user.target' > /tmp/nohuppy.service
+  print 'wrote /tmp/nohuppy.service'
+  echo 'for i in /home/*; do 
+user=$(basename $i)
+  su $user -c 'nohuppy start /home/$user'
+done' > /tmp/nohuppy.sh
+  chmod +x /tmp/nohuppy.sh
+  print 'wrote /tmp/nohuppy.sh'
+  echo 'please verify the files above, and install them by running:
+
+  sudo mv /tmp/nohuppy.service /lib/systemd/system/.
+  sudo mv /tmp/nohuppy.sh      /root/.
+  sudo systemctl daemon-reload 
+  sudo systemctl enable nohuppy.service 
+  sudo systemctl start nohuppy.service 
+
+  '
+}
+
 usage(){
   echo "usage: "
   awk '/[a-zA-Z0-9_]+\(\){ #/ { 
