@@ -1,6 +1,6 @@
-the 6K minimalist way to manage an multi-app server 
+Basically `nohuppy` is the `docker-compose` of the unix `nohup` & `kill` utility.
 
-> powered by ~800k of tiny, battlehardened unix classics (`find awk lsof readlink socat dirname find`)
+> powered by ~800k of classic, battlehardened unix dependencies (`find awk lsof readlink socat dirname find kill`)
 
 It is slimmer than [pm.sh](https://github.com/coderofsalvation/pm.sh) and works without git/ssh (like [podi](https://github.com/coderofsalvation/podi))
 
@@ -33,10 +33,13 @@ $ echo 'pwd; sleep 1m' > /home/sarah/app3/app.sh
 # run all them user apps!
 
 ```
-$ nohuppy start /home
+# su john  -c 'nohuppy start /home/john'
+# su sarah -c 'nohuppy start /home/sarah'
 ```
 
-# allow restart/stop for ssh-users:
+> TIP: run this at server boot using a systemd/runit script
+
+# allow restart/stop for ssh-users or CI/CD:
 
 ```
 $ ssh john@myserver
@@ -51,10 +54,9 @@ myserver $ exit           # app will now linger(*) after logout
 
 > \* = `nohup` apps won't be killed after logout
 
-
 # allow (limited) triggers from http!
 
-in case your app has no http-features, now it has:
+in case your app has zero http-features, now it has (using `socat`):
 
 ```
 $ cd /home/john/app1
@@ -69,6 +71,8 @@ enter max parallel processes: 4
   │  ./.on.http is triggered by: curl http://127.0.0.1:3889 --http0.9 
 ```
 
+> now everytime `nohuppy start` is invoked, the `.on.http` will listen on your port
+
 use-cases for `.on.http`:
 
 * let CI/CD curl-cmd trigger a deployment: `git reset --hard && git pull origin master && nohuppy restart`
@@ -78,6 +82,8 @@ use-cases for `.on.http`:
 # why nohuppy
 
 Because single-app-servers combined with moore's law (multi-core cpus) is a bit silly in some cases. 
+On the other hand writing systemd/runit-files for each app is also a bit silly, hence this 'docker-compose' for nohup (which allows you 
+to start all apps using 1 systemd/runit file).
 
 # test
 
