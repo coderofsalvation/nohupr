@@ -4,7 +4,7 @@ Basically `nohuppy` around the `docker-compose` of the unix `nohup` & `kill` uti
 
 It is slimmer than [pm.sh](https://github.com/coderofsalvation/pm.sh) and works without git/ssh (like [podi](https://github.com/coderofsalvation/podi))
 
-# install on your server!
+## install on your server!
 
 ```
 $ sudo su
@@ -21,7 +21,7 @@ usage:
     http                      receive trigger from http
 ```
 
-# create some apps!
+## create some apps!
 
 ```
 $ echo 'pwd; sleep 1m' > /home/john/app1/app.sh
@@ -31,7 +31,7 @@ $ echo 'pwd; sleep 1m' > /home/sarah/app3/app.sh
 
 > these could be git-repositories with an `app.sh` file as entry-point
 
-# run all them user apps during boot!
+## run all them user apps during boot
 
 /root/nohuppy_start.sh
 ```
@@ -60,7 +60,7 @@ then enable it:
 # systemctl start shellscript.service 
 ```
 
-# enable control over ssh ('lingering'):
+## enable control over ssh ('lingering'):
 
 ```
 $ ssh john@myserver
@@ -75,7 +75,7 @@ myserver $ exit                  # apps will now linger(*) after logout
 
 > \* = `nohup` apps won't be killed after logout
 
-# allow (limited) triggers from http!
+## allow (limited) triggers from http!
 
 in case your app has zero http-features, now it has (using `socat`):
 
@@ -100,8 +100,19 @@ use-cases for `.on.http`:
 * run a backup thru scheduled CI/CD curl-cmd: `zip -ru /backup.zip /`
 * any situation which doesn't require millions of requests
 
+## auto-restart ./app.sh
+
+./app.sh
+```
+while sleep 2s; do 
+  time python3 myapp.py
+  echo "exited at $(date)"
+done
+```
+
 # why nohuppy
 
+Minimalism..nonbloated servers..bliss of simplicity.
 Because single-app-servers combined with moore's law (multi-core cpus) is a bit silly in some cases. 
 This is a 'docker-compose' for nohup (which allows you to start all apps using 1 systemd/runit file).
 
