@@ -1,0 +1,1 @@
+echo trigger received from $SOCAT_PEERADDR

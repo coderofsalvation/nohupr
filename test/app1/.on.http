@@ -1,0 +1,1 @@
+read -r url && echo .on.http: received $url from $SOCAT_PEERADDR
