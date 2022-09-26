@@ -1,4 +1,4 @@
-# nohup(py): the 6K minimalist way to manage an multi-app server 
+the 6K minimalist way to manage an multi-app server 
 
 > powered by ~800k of tiny, battlehardened unix classics (`find awk lsof readlink socat dirname find`)
 
