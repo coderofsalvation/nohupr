@@ -1,4 +1,4 @@
-Basically `nohuppy` around the 6kb `docker-compose` of the unix `nohup` & `kill` utility.
+Basically `nohuppy` is the 6kb `docker-compose` of the unix `nohup` & `kill` utility.
 
 > powered by ~800k of classic, battlehardened unix dependencies (`find awk lsof readlink socat dirname find kill`)
 
