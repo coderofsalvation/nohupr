@@ -49,19 +49,6 @@ trigger()    { printf "$C_NORMAL [$C_CYAN✓$C_NORMAL] $C_BOLD%s$C_NORMAL\n" "$1
                return $?
              }
 
-hello(){
-  echo -e '
-\e[38;5;57m   dP oo                           
-\e[38;5;93m   88                              
-\e[38;5;129m  88 dP 88d888b. .d8888b. dP    dP
-\e[38;5;165m  88 88 88   `88 88   `88 88    88
-\e[0m         88 88 88    88 88.  .88 88.  .88
-\e[38;5;201m  dP dP dP    dP `8888P88 `8888P88
-\e[38;5;201m                      .88      .88
-\e[38;5;205m                     d88P   d88P  
-\e[0m'
-}
-
 install(){ # install           : allow process to keep running after logout 
   debug sudo loginctl enable-linger $(whoami)
 }
@@ -83,7 +70,7 @@ start(){ # start [dir]             : starts ./app.sh [recursive] in background
   nohup ./app.sh 2>&1 &
   test -f .port && test -f .on.http && {
     print "listening at port $(cat .port) => .on.http"
-		nohup $ME http 2>&1 &
+    nohup $ME http 2>&1 &
 	}
 }
 
@@ -134,7 +121,7 @@ usage(){
     gsub(".*{ # ","",$0)
     gsub(" :.*","",$0)
     printf("    %-25s %s\n",$0,info)
-  }' $0 $(find .nohuppy -type f | awk '{ printf "%s ",$0 }') 2>/dev/null
+  }' $0 2>/dev/null
   echo 
   exit 0
 }
