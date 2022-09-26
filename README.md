@@ -2,7 +2,7 @@ the 6K minimalist way to manage an multi-app server
 
 > powered by ~800k of tiny, battlehardened unix classics (`find awk lsof readlink socat dirname find`)
 
-It is slimmer than [pm.sh](https://github.com/coderofsalvation/pm.sh) and does not need ssh (like [podi](https://github.com/coderofsalvation/podi))
+It is slimmer than [pm.sh](https://github.com/coderofsalvation/pm.sh) and works without git/ssh (like [podi](https://github.com/coderofsalvation/podi))
 
 # install on your server!
 
