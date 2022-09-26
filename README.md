@@ -7,7 +7,7 @@ It is slimmer than [pm.sh](https://github.com/coderofsalvation/pm.sh) and does n
 # install on your server!
 
 ```
-$ wget "....." > /usr/bin/nohuppy
+$ wget "https://raw.githubusercontent.com/coderofsalvation/nohuppy/main/nohuppy" > /usr/bin/nohuppy
 $ chmod +x /usr/bin/nohuppy
 $ nohuppy
 usage: 
