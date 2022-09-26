@@ -1,4 +1,4 @@
-Basically `nohuppy` is the `docker-compose` of the unix `nohup` & `kill` utility.
+Basically `nohuppy` around the `docker-compose` of the unix `nohup` & `kill` utility.
 
 > powered by ~800k of classic, battlehardened unix dependencies (`find awk lsof readlink socat dirname find kill`)
 
@@ -19,7 +19,6 @@ usage:
     ps                        lists running process(es) 
     logs                      show logs of ./app.sh
     http                      receive trigger from http
-
 ```
 
 # create some apps!
@@ -30,6 +29,8 @@ $ echo 'pwd; sleep 1m' > /home/john/app1/app2/app.sh
 $ echo 'pwd; sleep 1m' > /home/sarah/app3/app.sh
 ```
 
+> these could be git-repositories with an `app.sh` file as entry-point
+
 # run all them user apps!
 
 ```
@@ -39,7 +40,7 @@ $ echo 'pwd; sleep 1m' > /home/sarah/app3/app.sh
 
 > TIP: run this at server boot using a systemd/runit script
 
-# allow restart/stop for ssh-users or CI/CD:
+# allow restart/stop for ssh-users:
 
 ```
 $ ssh john@myserver
@@ -82,8 +83,7 @@ use-cases for `.on.http`:
 # why nohuppy
 
 Because single-app-servers combined with moore's law (multi-core cpus) is a bit silly in some cases. 
-On the other hand writing systemd/runit-files for each app is also a bit silly, hence this 'docker-compose' for nohup (which allows you 
-to start all apps using 1 systemd/runit file).
+This is a 'docker-compose' for nohup (which allows you to start all apps using 1 systemd/runit file).
 
 # test
 
