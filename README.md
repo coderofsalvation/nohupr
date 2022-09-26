@@ -109,7 +109,7 @@ done
 
 # why nohuppy
 
-Minimalism..nonbloated servers..bliss of simplicity.
+Minimalism..nonbloated servers..bliss of simplicity.<br>
 Because single-app-servers combined with moore's law (multi-core cpus) is a bit silly in some cases. 
 This is a 'docker-compose' for nohup (which allows you to start all apps using 1 systemd/runit file).
 
