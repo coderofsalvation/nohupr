@@ -27,9 +27,14 @@ usage:
 $ echo 'pwd; sleep 1m' > /home/john/app1/app.sh
 $ echo 'pwd; sleep 1m' > /home/john/app1/app2/app.sh
 $ echo 'pwd; sleep 1m' > /home/sarah/app3/app.sh
+
+$ cd /home/john/app1
+app1 $ nohuppy start
+ [✓] start
+appending output to 'nohup.out'
 ```
 
-> these could be git-repositories with an `app.sh` file as entry-point
+> optionally these could be git-repositories with an `app.sh` file as entry-point
 
 ## run all user apps during boot
 
@@ -46,7 +51,6 @@ please verify the files above, and install them by running:
   sudo systemctl enable nohuppy.service 
   sudo systemctl start nohuppy.service 
 
-$
 ```
 
 ## enable control over ssh ('lingering'):
