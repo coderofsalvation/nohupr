@@ -7,10 +7,9 @@ It is slimmer than [pm.sh](https://github.com/coderofsalvation/pm.sh) and works 
 ## install on your server!
 
 ```
-$ sudo su
-# wget "https://raw.githubusercontent.com/coderofsalvation/nohupr/main/nohupr" > /usr/bin/nohupr
-# chmod 755 /usr/bin/nohupr
-# nohupr
+$ wget "https://raw.githubusercontent.com/coderofsalvation/nohupr/main/nohupr" 
+$ chmod 755 nohupr
+$ ./nohupr
 usage: 
     install                   allow process to keep running after logout 
     start [dir]               starts ./app.sh [recursive] in background
