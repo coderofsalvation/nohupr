@@ -1,4 +1,4 @@
-`nohuppy` is the 6kb `docker-compose` of the unix `nohup` & `kill` utility.
+`nohupr` is the 6kb `docker-compose` of the unix `nohup` & `kill` utility.
 
 > powered by ~800k of classic, battlehardened unix dependencies (`find awk lsof readlink socat dirname find kill`)
 
@@ -8,9 +8,9 @@ It is slimmer than [pm.sh](https://github.com/coderofsalvation/pm.sh) and works 
 
 ```
 $ sudo su
-# wget "https://raw.githubusercontent.com/coderofsalvation/nohuppy/main/nohuppy" > /usr/bin/nohuppy
-# chmod 755 /usr/bin/nohuppy
-# nohuppy
+# wget "https://raw.githubusercontent.com/coderofsalvation/nohupr/main/nohupr" > /usr/bin/nohupr
+# chmod 755 /usr/bin/nohupr
+# nohupr
 usage: 
     install                   allow process to keep running after logout 
     start [dir]               starts ./app.sh [recursive] in background
@@ -28,10 +28,14 @@ $ echo 'pwd; sleep 1m' > /home/john/app1/app.sh
 $ echo 'pwd; sleep 1m' > /home/john/app1/app2/app.sh
 $ echo 'pwd; sleep 1m' > /home/sarah/app3/app.sh
 
-$ cd /home/john/app1
-app1 $ nohuppy start
+$ ./nohupr start /home/john
  [✓] start
-appending output to 'nohup.out'
+  │  [✓] /home/john/app1/app.sh
+  │  [✓] /home/john/app1/app2/app.sh
+
+$ cd /home/john/app1
+app1 $ nohupr stop
+ [✓] stop
 ```
 
 > optionally these could be git-repositories with an `app.sh` file as entry-point
@@ -39,17 +43,17 @@ appending output to 'nohup.out'
 ## run all user apps during boot
 
 ```
-$ nohuppy systemd
+$ nohupr systemd
  [✓] systemd
-  │  wrote /tmp/nohuppy.service
-  │  wrote /tmp/nohuppy.sh
+  │  wrote /tmp/nohupr.service
+  │  wrote /tmp/nohupr.sh
 please verify the files above, and install them by running:
 
-  sudo mv /tmp/nohuppy.service /lib/systemd/system/.
-  sudo mv /tmp/nohuppy.sh      /root/.
+  sudo mv /tmp/nohupr.service /lib/systemd/system/.
+  sudo mv /tmp/nohupr.sh      /root/.
   sudo systemctl daemon-reload 
-  sudo systemctl enable nohuppy.service 
-  sudo systemctl start nohuppy.service 
+  sudo systemctl enable nohupr.service 
+  sudo systemctl start nohupr.service 
 
 ```
 
@@ -57,12 +61,12 @@ please verify the files above, and install them by running:
 
 ```
 $ ssh john@myserver
-myserver $ nohuppy install
+myserver $ nohupr install
  [✓] install
 + sudo loginctl enable-linger john
 [sudo] password for john: ******
 
-myserver $ nohuppy restart .     # restart all apps
+myserver $ nohupr restart .     # restart all apps
 myserver $ exit                  # apps will now linger(*) after logout
 ```
 
@@ -74,7 +78,7 @@ in case your app has zero http-features, now it has (using `socat`):
 
 ```
 $ cd /home/john/app1
-$ nohuppy http
+$ nohupr http
  [✓] http
 enter portnumber: 3889
   │  created '.port'
@@ -89,11 +93,11 @@ $ curl http://127.0.0.1:3889 --http0.9           # another terminal
 .on.http: received GET / HTTP/1.1 from 127.0.0.1
 ```
 
-> now everytime `nohuppy start` is invoked, the `.on.http` will listen on your port
+> now everytime `nohupr start` is invoked, the `.on.http` will listen on your port
 
 use-cases for `.on.http`:
 
-* let CI/CD curl-cmd trigger a deployment: `git reset --hard && git pull origin master && nohuppy restart`
+* let CI/CD curl-cmd trigger a deployment: `git reset --hard && git pull origin master && nohupr restart`
 * run a backup thru scheduled CI/CD curl-cmd: `zip -ru /backup.zip /`
 * any situation which doesn't require millions of requests
 
@@ -107,7 +111,7 @@ while sleep 2s; do
 done
 ```
 
-# why nohuppy
+# why nohupr
 
 Minimalism..nonbloated servers..bliss of simplicity.<br>
 Because single-app-servers combined with moore's law (multi-core cpus) is a bit silly in some cases. 

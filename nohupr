@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 required="awk lsof readlink nohup socat dirname find"
-ME="$(readlink -f $(dirname $0))/nohuppy"
+ME="$(readlink -f $(dirname $0))/nohupr"
 #trap "trigger cleanup" 0 1 2 3 6
 C_GREY="\\033[1;30m"
 C_BOLD="\\033[1;37;40m"
@@ -114,29 +114,29 @@ http(){ # http                 : receive trigger from http
 }
 
 systemd(){
-  test -f /lib/systemd/system/nohuppy.service && { print "nohuppy systemd installed"; exit 0; }
+  test -f /lib/systemd/system/nohupr.service && { print "nohuppy systemd installed"; exit 0; }
   echo '[Unit]
-  Description=nohuppy apps 
+  Description=nohupr apps 
 
   [Service]
-  ExecStart=/root/nohuppy.sh
+  ExecStart=/root/nohupr.sh
 
   [Install]
-  WantedBy=multi-user.target' > /tmp/nohuppy.service
-  print 'wrote /tmp/nohuppy.service'
+  WantedBy=multi-user.target' > /tmp/nohupr.service
+  print 'wrote /tmp/nohupr.service'
   echo 'for i in /home/*; do 
 user=$(basename $i)
-  su $user -c 'nohuppy start /home/$user'
-done' > /tmp/nohuppy.sh
-  chmod +x /tmp/nohuppy.sh
-  print 'wrote /tmp/nohuppy.sh'
+  su $user -c 'nohupr start /home/$user'
+done' > /tmp/nohupr.sh
+  chmod +x /tmp/nohupr.sh
+  print 'wrote /tmp/nohupr.sh'
   echo 'please verify the files above, and install them by running:
 
-  sudo mv /tmp/nohuppy.service /lib/systemd/system/.
-  sudo mv /tmp/nohuppy.sh      /root/.
+  sudo mv /tmp/nohupr.service /lib/systemd/system/.
+  sudo mv /tmp/nohupr.sh      /root/.
   sudo systemctl daemon-reload 
-  sudo systemctl enable nohuppy.service 
-  sudo systemctl start nohuppy.service 
+  sudo systemctl enable nohupr.service 
+  sudo systemctl start nohupr.service 
 
   '
 }
